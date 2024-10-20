@@ -1,7 +1,7 @@
 # WIP
 # Problem:
-While developing this demo https://hunter-macnab.itch.io/peralez-questions which leans heavily on written text based portrayals to design social interaction gameplay,
-Bogged down as writer/game designer needing to manage to different sets of text within:
+While developing this demo https://hunter-macnab.itch.io/peralez-questions which leans heavily on written text based portrayals to design social interaction gameplay, I'm
+bogged down as writer/game designer needing to manage to different sets of text within:
 Obsidian game design vault. 
 ![image](https://github.com/user-attachments/assets/0fc1a72e-5001-4209-a086-ff9d51d2791f)
 
