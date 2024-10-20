@@ -40,3 +40,8 @@ std::string MdPortrayalFileToCSV(std::filesystem::path PortrayalPath) {
 	}
 }
 
+std::vector<std::filesystem::path> GetPortrayalFiles(std::filesystem::path searchDir) {
+	std::vector<std::filesystem::path> result;
+
+	return result;
+}
