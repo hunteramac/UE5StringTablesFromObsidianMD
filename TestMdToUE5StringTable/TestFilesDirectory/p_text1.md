@@ -1,1 +1,1 @@
-It was a dark and stormy knight
+It was a dark and stormy night.

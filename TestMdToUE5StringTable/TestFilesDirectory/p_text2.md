@@ -1,0 +1,1 @@
+The fog rolling across the night city skyline shrouded the skyscrapers in gloom.
