@@ -43,5 +43,9 @@ std::string MdPortrayalFileToCSV(std::filesystem::path PortrayalPath) {
 std::vector<std::filesystem::path> GetPortrayalFiles(std::filesystem::path searchDir) {
 	std::vector<std::filesystem::path> result;
 
+	for (const auto& entry : std::filesystem::directory_iterator(searchDir)) {
+		result.push_back(entry.path());
+	}
+
 	return result;
 }
