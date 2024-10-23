@@ -18,6 +18,9 @@
     <ClCompile Include="MdToUE5StringTables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MdToCSV.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MdToCSV.h">

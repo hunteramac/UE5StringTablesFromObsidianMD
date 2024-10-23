@@ -42,7 +42,7 @@ TEST(TestGetPortrayalFiles, test1) {
 	std::filesystem::path PortrayalFile2 = "../../../TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles/p_text2.md";
 
 	// ACT
-	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalFiles(pathToDirectory);
+	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
 	
 	std::vector<std::filesystem::path> expect{ PortrayalFile1, PortrayalFile2 };
 	EXPECT_EQ(resultPortrayalFilePaths,expect);
@@ -55,8 +55,21 @@ TEST(TestGetPortrayalFiles, OneFileInDirectory) {
 	std::filesystem::path PortrayalFile1 = "../../../TestMdToUE5StringTable/TestFilesDirectory/Simple/p_text1.md";
 
 	// ACT
-	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalFiles(pathToDirectory);
+	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
 
 	std::vector<std::filesystem::path> expect{ PortrayalFile1};
+	EXPECT_EQ(resultPortrayalFilePaths, expect);
+}
+
+TEST(TestGetPortrayalFiles, TwoFilesInDirectoryOnlyOnePortrayal) {
+	// Arrange
+	// Path to obsidian vault game design scene folder
+	std::filesystem::path pathToDirectory = "../../../TestMdToUE5StringTable/TestFilesDirectory/2Files_1Portrayal";
+	std::filesystem::path PortrayalFile1 = "../../../TestMdToUE5StringTable/TestFilesDirectory/2Files_1Portrayal/p_text1.md";
+
+	// ACT
+	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
+
+	std::vector<std::filesystem::path> expect{ PortrayalFile1 };
 	EXPECT_EQ(resultPortrayalFilePaths, expect);
 }
