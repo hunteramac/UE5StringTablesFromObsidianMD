@@ -3,7 +3,7 @@
 std::vector<std::filesystem::path> GetPortrayalMDFilePaths(std::filesystem::path searchDir) {
 	std::vector<std::filesystem::path> result;
 
-	for (const auto& entry : std::filesystem::directory_iterator(searchDir)) {
+	for (const auto& entry : std::filesystem::recursive_directory_iterator(searchDir)) {
 		//check if is a portrayal file
 		if (isPortrayalFile("p_", entry)) {
 			result.push_back(entry.path());
