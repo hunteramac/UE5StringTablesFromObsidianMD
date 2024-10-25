@@ -2,10 +2,25 @@
 //
 
 #include <iostream>
+#include "MdToCSV.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    //learning only
+    std::filesystem::path curPath = std::filesystem::current_path().string();
+    // should be arguments from command line
+    std::filesystem::path pathToDirectory = "../TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
+    std::filesystem::path pathToOutputCSV = "../TestMdToUE5StringTable/TestFilesDirectory/ScriptOutput";
+
+    std::cout << "Getting Portrayal File paths\n";
+    std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
+
+    std::string result = "";
+
+    for (const auto path : resultPortrayalFilePaths) {
+        result.append(MdPortrayalFileToCSV(path) + "\n");
+    }
+    
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
