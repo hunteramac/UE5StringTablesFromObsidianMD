@@ -12,13 +12,14 @@ int main()
     // Should be arguments from command line
     
     std::filesystem::path pathToDirectory = "D:/dev/UE5StringTablesFromObsidianMD/TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
+    //std::filesystem::path pathToDirectory = "C:/Users/hunter/OneDrive/[Vault] Game Dev/Spec/C2077/A_Friends_Last_Text";
 
     //std::filesystem::path pathToDirectory = "../TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
     //std::filesystem::path pathToOutputCSV = "../TestMdToUE5StringTable/TestFilesDirectory/ScriptOutput/ST_portrayals.md";
 
     // Make path to csv file (with name)
     std::filesystem::path pathToOutputCSV = "D:/dev/UE5StringTablesFromObsidianMD/TestMdToUE5StringTable/TestFilesDirectory/ScriptOutput";
-    std::filesystem::path csvName = "ST_portrayals.md";
+    std::filesystem::path csvName = "ST_portrayals.csv";
     pathToOutputCSV /= csvName;
 
     std::cout << "Getting Portrayal File paths\n";
@@ -33,6 +34,7 @@ int main()
     // Make CSV file
     std::ofstream csvFile;
     csvFile.open(pathToOutputCSV.c_str(), std::ofstream::trunc); // if file exists, overwrite
+    csvFile << "Key,SourceString\n";
     csvFile << result;
     csvFile.close();
     
