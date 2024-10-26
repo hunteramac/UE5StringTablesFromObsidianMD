@@ -10,8 +10,16 @@ int main()
     // Learning only
     std::filesystem::path curPath = std::filesystem::current_path().string();
     // Should be arguments from command line
-    std::filesystem::path pathToDirectory = "../TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
-    std::filesystem::path pathToOutputCSV = "../TestMdToUE5StringTable/TestFilesDirectory/ScriptOutput/ST_portrayals.md";
+    
+    std::filesystem::path pathToDirectory = "D:/dev/UE5StringTablesFromObsidianMD/TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
+
+    //std::filesystem::path pathToDirectory = "../TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
+    //std::filesystem::path pathToOutputCSV = "../TestMdToUE5StringTable/TestFilesDirectory/ScriptOutput/ST_portrayals.md";
+
+    // Make path to csv file (with name)
+    std::filesystem::path pathToOutputCSV = "D:/dev/UE5StringTablesFromObsidianMD/TestMdToUE5StringTable/TestFilesDirectory/ScriptOutput";
+    std::filesystem::path csvName = "ST_portrayals.md";
+    pathToOutputCSV /= csvName;
 
     std::cout << "Getting Portrayal File paths\n";
     std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
