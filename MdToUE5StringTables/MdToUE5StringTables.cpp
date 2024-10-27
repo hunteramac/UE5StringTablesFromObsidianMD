@@ -5,22 +5,19 @@
 #include <ostream>
 #include "MdToCSV.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    // Learning only
-    std::filesystem::path curPath = std::filesystem::current_path().string();
-    // Should be arguments from command line
-    
-    //std::filesystem::path pathToDirectory = "D:/dev/UE5StringTablesFromObsidianMD/TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
-    std::filesystem::path pathToDirectory = "C:/Users/hunter/OneDrive/[Vault] Game Dev/Spec/C2077/A_Friends_Last_Text";
+    if (argc != 3) {
+        std::cout << "Must provide input and output file paths, 1.Path to Obsidian Vault design directory 2.Path to output the csv (path+filename)";
+        return -1;
+    }
 
-    //std::filesystem::path pathToDirectory = "../TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
-    //std::filesystem::path pathToOutputCSV = "../TestMdToUE5StringTable/TestFilesDirectory/ScriptOutput/ST_portrayals.md";
+     // Continue
 
-    // Make path to csv file (with name)
-    std::filesystem::path pathToOutputCSV = "D:/dev/UE5StringTablesFromObsidianMD/TestMdToUE5StringTable/TestFilesDirectory/ScriptOutput";
-    std::filesystem::path csvName = "ST_portrayals.csv";
-    pathToOutputCSV /= csvName;
+    std::filesystem::path pathToDirectory = argv[1];
+    std::filesystem::path pathToOutputCSV = argv[2];
+    /*std::filesystem::path csvName = "ST_portrayals.csv";
+    pathToOutputCSV /= csvName;*/
 
     std::cout << "Getting Portrayal File paths\n";
     std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
