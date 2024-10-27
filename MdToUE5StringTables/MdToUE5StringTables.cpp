@@ -11,8 +11,8 @@ int main()
     std::filesystem::path curPath = std::filesystem::current_path().string();
     // Should be arguments from command line
     
-    std::filesystem::path pathToDirectory = "D:/dev/UE5StringTablesFromObsidianMD/TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
-    //std::filesystem::path pathToDirectory = "C:/Users/hunter/OneDrive/[Vault] Game Dev/Spec/C2077/A_Friends_Last_Text";
+    //std::filesystem::path pathToDirectory = "D:/dev/UE5StringTablesFromObsidianMD/TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
+    std::filesystem::path pathToDirectory = "C:/Users/hunter/OneDrive/[Vault] Game Dev/Spec/C2077/A_Friends_Last_Text";
 
     //std::filesystem::path pathToDirectory = "../TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles";
     //std::filesystem::path pathToOutputCSV = "../TestMdToUE5StringTable/TestFilesDirectory/ScriptOutput/ST_portrayals.md";

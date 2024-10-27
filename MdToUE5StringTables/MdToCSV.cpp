@@ -31,7 +31,9 @@ std::string MdPortrayalFileToCSV(std::filesystem::path PortrayalPath) {
 
 	std::optional<std::string> result = GetFileContents(PortrayalPath);
 	if (result.has_value()) {
-		return "\"" + portrayalFileName + "\",\"" + result.value() + "\"";
+		std::string converted = GetCsvFormatString(result.value());
+
+		return "\"" + portrayalFileName + "\",\"" + converted + "\"";
 	}
 	else {
 		// Do something better in next TDD itteration
@@ -59,4 +61,23 @@ std::optional<std::string> GetFileContents(std::filesystem::path path) {
 	else {
 		return std::nullopt;
 	}
+}
+
+std::string GetCsvFormatString(std::string portrayalFileContents) {
+	std::string converted = portrayalFileContents;
+
+	// convert " to \" In C++ means \\\"\"
+	converted = replaceSubstring(converted, "\"", "\\\"\"");
+
+	return converted;
+}
+
+std::string replaceSubstring(std::string input , std::string replace, std::string replaceWith) {
+	size_t pos = input.find(replace);
+	while (pos != std::string::npos) {
+		input.replace(pos, replace.size(), replaceWith);
+		pos = input.find(replace, pos + replaceWith.size());
+	}
+
+	return input;
 }

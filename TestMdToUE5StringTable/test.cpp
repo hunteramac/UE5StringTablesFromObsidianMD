@@ -32,6 +32,33 @@ TEST(MdToCSV, takesPathToFileOutputsContentsToCSV2) {
 	EXPECT_EQ(result, ExpectedCsvParse);
 }
 
+TEST(TestGetFileContents, doesntThrowIfPathInvalid) {
+	// ARRANGE
+	std::filesystem::path PortrayalFile = "invalid/Path/";
+
+	// ACT
+	std::optional<std::string> result = GetFileContents(PortrayalFile);
+	
+	EXPECT_FALSE(result.has_value());
+}
+
+TEST(TestConvertPortrayalToCSVForm, inputFileHasQoutes) {
+	// ARRANGE
+	std::filesystem::path PortrayalFile = "../../../TestMdToUE5StringTable/TestFilesDirectory/ParsingToCSV/quotes/p_text1.md";
+	std::filesystem::path ExpectFile = "../../../TestMdToUE5StringTable/TestFilesDirectory/ParsingToCSV/quotes/expect.md";
+
+	std::optional<std::string> fileContents = GetFileContents(PortrayalFile);
+	ASSERT_TRUE(fileContents.has_value());
+
+	std::optional<std::string> expect = GetFileContents(ExpectFile);
+	ASSERT_TRUE(expect.has_value());
+
+	// ACT
+	std::string result = GetCsvFormatString(fileContents.value());
+
+	EXPECT_EQ(result, expect.value());
+}
+
 #include "gmock/gmock-matchers.h"
 
 TEST(TestGetPortrayalFiles, test1) {
