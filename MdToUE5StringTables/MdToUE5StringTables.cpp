@@ -5,6 +5,25 @@
 #include <ostream>
 #include "MdToCSV.h"
 
+void MdWithPrefixContentsToCSV(std::string prefix, std::filesystem::path pathToDirectory, std::filesystem::path pathToOutputCSV) {
+
+
+    std::vector<std::filesystem::path> resultPortrayalFilePaths = GetMDFilePathsWithFileNamePrefix(prefix, pathToDirectory);
+
+    std::string result = "";
+
+    for (const auto path : resultPortrayalFilePaths) {
+        result.append(MdFileContentsToCSV(path) + "\n");
+    }
+
+    // Make CSV file
+    std::ofstream csvFile;
+    csvFile.open(pathToOutputCSV.c_str(), std::ofstream::trunc); // if file exists, overwrite
+    csvFile << "Key,SourceString\n";
+    csvFile << result;
+    csvFile.close();
+}
+
 int main(int argc, char* argv[])
 {
     if (argc != 3) {
@@ -16,25 +35,16 @@ int main(int argc, char* argv[])
 
     std::filesystem::path pathToDirectory = argv[1];
     std::filesystem::path pathToOutputCSV = argv[2];
-    /*std::filesystem::path csvName = "ST_portrayals.csv";
-    pathToOutputCSV /= csvName;*/
 
-    std::cout << "Getting Portrayal File paths\n";
-    std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
+    std::filesystem::path pathToOutputPortrayalCSV = pathToOutputCSV / "ST_portrayals.csv";
+    std::filesystem::path pathToOutputDeclarationCSV = pathToOutputCSV / "ST_declarations.csv";
 
-    std::string result = "";
+    std::cout << "Getting Portrayal Files\n";
+    MdWithPrefixContentsToCSV("p_", pathToDirectory, pathToOutputPortrayalCSV);
 
-    for (const auto path : resultPortrayalFilePaths) {
-        result.append(MdPortrayalFileToCSV(path) + "\n");
-    }
+    std::cout << "Getting Action Declaration Files\n";
+    MdWithPrefixContentsToCSV("d_", pathToDirectory, pathToOutputDeclarationCSV);
 
-    // Make CSV file
-    std::ofstream csvFile;
-    csvFile.open(pathToOutputCSV.c_str(), std::ofstream::trunc); // if file exists, overwrite
-    csvFile << "Key,SourceString\n";
-    csvFile << result;
-    csvFile.close();
-    
     // Success
     return 0;
 }

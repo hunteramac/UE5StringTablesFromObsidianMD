@@ -13,7 +13,7 @@ TEST(MdToCSV, takesPathToFileOutputsContentsToCSV1) {
 	
 	// ACT - Read premade p_text1.md from testing directory (top level)
 
-	std::string result = MdPortrayalFileToCSV(PortrayalFile);
+	std::string result = MdFileContentsToCSV(PortrayalFile);
 	// ASSERT - Result matches expected write to csv file
 	std::string ExpectedCsvParse = "\"p_text1\",\"It was a dark and stormy night.\"";
 	EXPECT_EQ(result, ExpectedCsvParse);
@@ -25,7 +25,7 @@ TEST(MdToCSV, takesPathToFileOutputsContentsToCSV2) {
 
 	// ACT - Read premade p_text1.md from testing directory (top level)
 
-	std::string result = MdPortrayalFileToCSV(PortrayalFile);
+	std::string result = MdFileContentsToCSV(PortrayalFile);
 	// ASSERT - Result matches expected write to csv file
 
 	std::string ExpectedCsvParse = "\"p_text2\",\"The fog rolling across the night city skyline shrouded the skyscrapers in gloom.\"";
@@ -69,7 +69,7 @@ TEST(TestGetPortrayalFiles, test1) {
 	std::filesystem::path PortrayalFile2 = "../../../TestMdToUE5StringTable/TestFilesDirectory/TwoPortrayalFiles/p_text2.md";
 
 	// ACT
-	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
+	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetMDFilePathsWithFileNamePrefix("p_", pathToDirectory);
 	
 	std::vector<std::filesystem::path> expect{ PortrayalFile1, PortrayalFile2 };
 	EXPECT_EQ(resultPortrayalFilePaths,expect);
@@ -82,7 +82,7 @@ TEST(TestGetPortrayalFiles, OneFileInDirectory) {
 	std::filesystem::path PortrayalFile1 = "../../../TestMdToUE5StringTable/TestFilesDirectory/Simple/p_text1.md";
 
 	// ACT
-	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
+	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetMDFilePathsWithFileNamePrefix("p_", pathToDirectory);
 
 	std::vector<std::filesystem::path> expect{ PortrayalFile1};
 	EXPECT_EQ(resultPortrayalFilePaths, expect);
@@ -95,7 +95,7 @@ TEST(TestGetPortrayalFiles, TwoFilesInDirectoryOnlyOnePortrayal) {
 	std::filesystem::path PortrayalFile1 = "../../../TestMdToUE5StringTable/TestFilesDirectory/2Files_1Portrayal/p_text1.md";
 
 	// ACT
-	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
+	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetMDFilePathsWithFileNamePrefix("p_", pathToDirectory);
 
 	std::vector<std::filesystem::path> expect{ PortrayalFile1 };
 	EXPECT_EQ(resultPortrayalFilePaths, expect);
@@ -108,7 +108,7 @@ TEST(TestGetPortrayalFiles, PortrayalInSubdirectory) {
 	std::filesystem::path PortrayalFile1 = "../../../TestMdToUE5StringTable/TestFilesDirectory/Subdirectories1/portrayals/p_text1.md";
 
 	// ACT
-	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetPortrayalMDFilePaths(pathToDirectory);
+	std::vector<std::filesystem::path> resultPortrayalFilePaths = GetMDFilePathsWithFileNamePrefix("p_", pathToDirectory);
 
 	std::vector<std::filesystem::path> expect{ PortrayalFile1 };
 	EXPECT_EQ(resultPortrayalFilePaths, expect);

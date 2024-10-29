@@ -1,11 +1,11 @@
 #include "MdToCSV.h"
 
-std::vector<std::filesystem::path> GetPortrayalMDFilePaths(std::filesystem::path searchDir) {
+std::vector<std::filesystem::path> GetMDFilePathsWithFileNamePrefix(std::string prefix, std::filesystem::path searchDir) {
 	std::vector<std::filesystem::path> result;
 
 	for (const auto& entry : std::filesystem::recursive_directory_iterator(searchDir)) {
 		//check if is a portrayal file
-		if (isPortrayalFile("p_", entry)) {
+		if (fileNameHasPrefix(prefix, entry)) {
 			result.push_back(entry.path());
 		}
 	}
@@ -13,7 +13,7 @@ std::vector<std::filesystem::path> GetPortrayalMDFilePaths(std::filesystem::path
 	return result;
 }
 
-bool isPortrayalFile(std::string portrayalFilePrefix, std::filesystem::directory_entry entry) {
+bool fileNameHasPrefix(std::string portrayalFilePrefix, std::filesystem::directory_entry entry) {
 	std::filesystem::path temp = entry.path();
 
 	if (temp.extension() != ".md")
@@ -25,7 +25,7 @@ bool isPortrayalFile(std::string portrayalFilePrefix, std::filesystem::directory
 	return false;
 }
 
-std::string MdPortrayalFileToCSV(std::filesystem::path PortrayalPath) {
+std::string MdFileContentsToCSV(std::filesystem::path PortrayalPath) {
 	//Get filename without extension for CSV
 	std::string portrayalFileName = PortrayalPath.stem().string();
 
