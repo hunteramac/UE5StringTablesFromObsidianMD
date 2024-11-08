@@ -1,5 +1,18 @@
 #include "MdToCSV.h"
 
+std::string RemoveObsidianEditorMarkdown(std::string input) {
+	//Search for tags at the TOP of the file and remove them
+	size_t pos = input.find("#");
+	
+	// is tag at start of the file?
+	if (pos == 0) {
+		size_t newLine = input.find('\n');
+		// Erase the line between pos and newline -> first line is all tags is assumed
+		input.erase(pos, newLine+1);
+	}
+	return input;
+}
+
 std::vector<std::filesystem::path> GetMDFilePathsWithFileNamePrefix(std::string prefix, std::filesystem::path searchDir) {
 	std::vector<std::filesystem::path> result;
 
@@ -25,13 +38,16 @@ bool fileNameHasPrefix(std::string portrayalFilePrefix, std::filesystem::directo
 	return false;
 }
 
-std::string MdFileContentsToCSV(std::filesystem::path PortrayalPath) {
+std::string ObsidianMdFileContentsToCSV(std::filesystem::path PortrayalPath) {
 	//Get filename without extension for CSV
 	std::string portrayalFileName = PortrayalPath.stem().string();
 
 	std::optional<std::string> result = GetFileContents(PortrayalPath);
 	if (result.has_value()) {
-		std::string converted = GetCsvFormatString(result.value());
+		
+		std::string removedObsidianSpecificMarkdown = RemoveObsidianEditorMarkdown(result.value());
+
+		std::string converted = GetCsvFormatString(removedObsidianSpecificMarkdown);
 
 		return "\"" + portrayalFileName + "\",\"" + converted + "\"";
 	}

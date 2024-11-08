@@ -13,7 +13,7 @@ void MdWithPrefixContentsToCSV(std::string prefix, std::filesystem::path pathToD
     std::string result = "";
 
     for (const auto path : resultPortrayalFilePaths) {
-        result.append(MdFileContentsToCSV(path) + "\n");
+        result.append(ObsidianMdFileContentsToCSV(path) + "\n");
     }
 
     // Make CSV file

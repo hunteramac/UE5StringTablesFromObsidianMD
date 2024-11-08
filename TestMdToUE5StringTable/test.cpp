@@ -13,7 +13,7 @@ TEST(MdToCSV, takesPathToFileOutputsContentsToCSV1) {
 	
 	// ACT - Read premade p_text1.md from testing directory (top level)
 
-	std::string result = MdFileContentsToCSV(PortrayalFile);
+	std::string result = ObsidianMdFileContentsToCSV(PortrayalFile);
 	// ASSERT - Result matches expected write to csv file
 	std::string ExpectedCsvParse = "\"p_text1\",\"It was a dark and stormy night.\"";
 	EXPECT_EQ(result, ExpectedCsvParse);
@@ -25,11 +25,22 @@ TEST(MdToCSV, takesPathToFileOutputsContentsToCSV2) {
 
 	// ACT - Read premade p_text1.md from testing directory (top level)
 
-	std::string result = MdFileContentsToCSV(PortrayalFile);
+	std::string result = ObsidianMdFileContentsToCSV(PortrayalFile);
 	// ASSERT - Result matches expected write to csv file
 
 	std::string ExpectedCsvParse = "\"p_text2\",\"The fog rolling across the night city skyline shrouded the skyscrapers in gloom.\"";
 	EXPECT_EQ(result, ExpectedCsvParse);
+}
+
+TEST(MdToCSV, inputFileHasObsidianTag) {
+	// ARRANGE
+	std::string convert = "#dummyTag #dummyTag2 \nIt Was a dark and stormy night.\n Snoopy.";
+	
+	std::string expect = "It Was a dark and stormy night.\n Snoopy.";
+
+	std::string result = RemoveObsidianEditorMarkdown(convert);
+
+	EXPECT_EQ(result, expect);
 }
 
 TEST(TestGetFileContents, doesntThrowIfPathInvalid) {
