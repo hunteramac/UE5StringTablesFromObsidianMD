@@ -9,8 +9,39 @@ std::string RemoveObsidianEditorMarkdown(std::string input) {
 		size_t newLine = input.find('\n');
 		// Erase the line between pos and newline -> first line is all tags is assumed
 		input.erase(pos, newLine+1);
+		return input;
+	}
+
+	// check for --- version of obsidian tags, and remove.
+	size_t pos2 = input.find("---\n");
+	if (pos2 == 0) {
+		input.erase(0, pos2+4);
+		size_t pos3 = input.find("---\n");
+
+		input.erase(0, pos3+4);
+
+		return input;
 	}
 	return input;
+}
+
+bool hasObsidianTagV2(std::string tag, std::string contents) {
+	// check for --- version of obsidian tags, and remove.
+	size_t pos2 = contents.find("---\n");
+	if (pos2 == 0) {
+		contents.erase(0, pos2 + 4);
+		size_t pos3 = contents.find("---\n");
+
+		contents.erase(pos3, std::string::npos); //clear all remaining
+
+		// check if tag is present now only frontmatter leftover
+		size_t findTagResult = contents.find(tag);
+		// https://cplusplus.com/reference/string/string/find/
+		if (findTagResult != std::string::npos) {
+			return true;
+		}
+	}
+	return false;
 }
 
 std::vector<std::filesystem::path> GetMDFilePathsWithFileNamePrefix(std::string prefix, std::filesystem::path searchDir) {
@@ -25,6 +56,34 @@ std::vector<std::filesystem::path> GetMDFilePathsWithFileNamePrefix(std::string 
 
 	return result;
 }
+
+std::vector<std::filesystem::path> GetMDFilePathsWithObsidianTag(std::string tag, std::filesystem::path searchDir) {
+	std::vector<std::filesystem::path> result;
+
+	for (const auto& entry : std::filesystem::recursive_directory_iterator(searchDir)) {
+		//check if is a portrayal file
+
+		//get file contents to check tag
+		std::optional<std::string> contents = GetFileContents(entry);
+		
+		bool hasTag = false;
+
+		if (contents.has_value()) {
+			// check if tag present
+			hasTag = hasObsidianTagV2(tag, contents.value());
+		}
+		
+		// if tag matched, then push the entry
+		if (hasTag) {
+			result.push_back(entry.path());
+		}
+	}
+
+	return result;
+}
+
+
+
 
 bool fileNameHasPrefix(std::string portrayalFilePrefix, std::filesystem::directory_entry entry) {
 	std::filesystem::path temp = entry.path();

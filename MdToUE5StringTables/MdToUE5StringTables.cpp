@@ -24,6 +24,24 @@ void MdWithPrefixContentsToCSV(std::string prefix, std::filesystem::path pathToD
     csvFile.close();
 }
 
+void MdContentsWithObsidianTagToCSV(std::string tag, std::filesystem::path pathToDirectory, std::filesystem::path pathToOutputCSV) {
+
+    std::vector<std::filesystem::path> resultPortrayalFilePaths = GetMDFilePathsWithObsidianTag(tag, pathToDirectory);
+
+    std::string result = "";
+
+    for (const auto path : resultPortrayalFilePaths) {
+        result.append(ObsidianMdFileContentsToCSV(path) + "\n");
+    }
+
+    // Make CSV file
+    std::ofstream csvFile;
+    csvFile.open(pathToOutputCSV.c_str(), std::ofstream::trunc); // if file exists, overwrite
+    csvFile << "Key,SourceString\n";
+    csvFile << result;
+    csvFile.close();
+}
+
 int main(int argc, char* argv[])
 {
     if (argc != 3) {
@@ -40,10 +58,11 @@ int main(int argc, char* argv[])
     std::filesystem::path pathToOutputDeclarationCSV = pathToOutputCSV / "ST_declarations.csv";
 
     std::cout << "Getting Portrayal Files\n";
-    MdWithPrefixContentsToCSV("p_", pathToDirectory, pathToOutputPortrayalCSV);
+    //MdWithPrefixContentsToCSV("p_", pathToDirectory, pathToOutputPortrayalCSV);
+    MdContentsWithObsidianTagToCSV("statePortrayal", pathToDirectory, pathToOutputPortrayalCSV);
 
     std::cout << "Getting Action Declaration Files\n";
-    MdWithPrefixContentsToCSV("d_", pathToDirectory, pathToOutputDeclarationCSV);
+    MdContentsWithObsidianTagToCSV("actionDeclaration", pathToDirectory, pathToOutputDeclarationCSV);
 
     // Success
     return 0;

@@ -43,6 +43,40 @@ TEST(MdToCSV, inputFileHasObsidianTag) {
 	EXPECT_EQ(result, expect);
 }
 
+TEST(MdToCSV, inputFileHasObsidianTagV2) {
+	// ARRANGE
+	std::string convert = "---\ntags:  - statePortrayal\n---\nIt Was a dark and stormy night.\n Snoopy.";
+
+	std::string expect = "It Was a dark and stormy night.\n Snoopy.";
+
+	std::string result = RemoveObsidianEditorMarkdown(convert);
+
+	EXPECT_EQ(result, expect);
+}
+
+TEST(CheckObsidianTag, V2Tags1) {
+	// ARRANGE
+	std::string contents = "---\ntags:  - statePortrayal\n---\nIt Was a dark and stormy night.\n Snoopy.";
+
+	bool expect = true;
+
+	bool result = hasObsidianTagV2("statePortrayal", contents);
+
+	EXPECT_EQ(result, expect);
+}
+
+TEST(CheckObsidianTag, TagNotPresent2) {
+	// ARRANGE
+	std::string contents = "---\ntags:  - wrongTag\n---\nIt Was a dark and stormy night.\n Snoopy.";
+
+	bool expect = false;
+
+	bool result = hasObsidianTagV2("statePortrayal", contents);
+
+	EXPECT_EQ(result, expect);
+}
+
+
 TEST(TestGetFileContents, doesntThrowIfPathInvalid) {
 	// ARRANGE
 	std::filesystem::path PortrayalFile = "invalid/Path/";

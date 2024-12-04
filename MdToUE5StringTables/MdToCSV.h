@@ -13,3 +13,5 @@ std::vector<std::filesystem::path> GetMDFilePathsWithFileNamePrefix(std::string 
 std::string GetCsvFormatString(std::string portrayalFileContents);
 std::string replaceSubstring(std::string input, std::string replace, std::string replaceWith);
 std::string RemoveObsidianEditorMarkdown(std::string input);
+bool hasObsidianTagV2(std::string tag, std::string contents);
+std::vector<std::filesystem::path> GetMDFilePathsWithObsidianTag(std::string tag, std::filesystem::path searchDir);
