@@ -108,6 +108,9 @@ std::string ObsidianMdFileContentsToCSV(std::filesystem::path PortrayalPath) {
 
 		std::string converted = GetCsvFormatString(removedObsidianSpecificMarkdown);
 
+		if(removedObsidianSpecificMarkdown=="" || removedObsidianSpecificMarkdown == "\0\0\0")
+			return "\"" + portrayalFileName + "\",\"" + portrayalFileName + "\"";
+
 		return "\"" + portrayalFileName + "\",\"" + converted + "\"";
 	}
 	else {

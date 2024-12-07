@@ -32,6 +32,19 @@ TEST(MdToCSV, takesPathToFileOutputsContentsToCSV2) {
 	EXPECT_EQ(result, ExpectedCsvParse);
 }
 
+TEST(MdToCSV, NoContentsResultsInFileNameAsContents) {
+	// ARRANGE - Setup filepath to Portrayal File
+	std::filesystem::path PortrayalFile = "../../../TestMdToUE5StringTable/TestFilesDirectory/noContents/Famers replies; watching for traders coming into town.md";
+
+	// ACT - Read premade p_text1.md from testing directory (top level)
+
+	std::string result = ObsidianMdFileContentsToCSV(PortrayalFile);
+	// ASSERT - Result matches expected write to csv file
+
+	std::string ExpectedCsvParse = "\"Famers replies; watching for traders coming into town\",\"Famers replies; watching for traders coming into town\"";
+	EXPECT_EQ(result, ExpectedCsvParse);
+}
+
 TEST(MdToCSV, inputFileHasObsidianTag) {
 	// ARRANGE
 	std::string convert = "#dummyTag #dummyTag2 \nIt Was a dark and stormy night.\n Snoopy.";
